@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello jaan, Happy birthday ❤️</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Romantic Pink Animated Background */
+        body {
+            background: linear-gradient(135deg, #ffd1dc, #ff9ebb, #ff6b8b);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(255, 105, 180, 0.25);
+        }
+
+        /* Particles, Hearts & Paper Bits */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: floatUp 8s linear infinite;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.8);
+            font-size: 20px;
+            animation: floatHeart 10s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .paper-confetti {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            opacity: 0.8;
+            animation: fallPaper 7s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes fallPaper {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Fireworks Cracker Effect Canvas */
+        #fireworks-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Infinite Scrolling Marquee Text */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 25s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        /* 3-Tier Realistic Cake Styling */
+        .cake-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px auto;
+            position: relative;
+        }
+
+        .candle {
+            width: 6px;
+            height: 25px;
+            background: linear-gradient(to top, #ff4757, #ff6b81);
+            position: relative;
+            border-radius: 3px;
+            margin-bottom: -2px;
+        }
+
+        .flame {
+            width: 10px;
+            height: 16px;
+            background: #ffa502;
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -14px;
+            left: -2px;
+            animation: flicker 0.8s infinite alternate;
+            box-shadow: 0 0 10px #ffa502, 0 0 20px #ff4757;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-3deg); opacity: 0.9; }
+            100% { transform: scale(1.15) rotate(3deg); opacity: 1; }
+        }
+
+        .tier {
+            background: linear-gradient(135deg, #ff758f, #ff4d6d);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: inset 0 -8px 0 rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+
+        .tier-3 { width: 90px; height: 35px; }
+        .tier-2 { width: 140px; height: 45px; }
+        .tier-1 { width: 190px; height: 55px; }
+
+        .frosting {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: #fff;
+            border-radius: 10px 10px 5px 5px;
+            opacity: 0.9;
+        }
+
+        /* Active Glow Style for Music Circle Icon Buttons */
+        .music-btn-active {
+            background-color: #ff4757 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 12px #ff4757;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-gray-800 relative flex flex-col justify-between">
+
+    <!-- Canvas for Fireworks Crackers Animation -->
+    <canvas id="fireworks-canvas"></canvas>
+
+    <!-- Background Floating Elements Container -->
+    <div id="animation-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+    <!-- 3 Separate Audio Elements for 3 Songs -->
+    <audio id="bg-music-1" loop><source src="song1.mp3" type="audio/mpeg"></audio>
+    <audio id="bg-music-2" loop><source src="song2.mp3" type="audio/mpeg"></audio>
+    <audio id="bg-music-3" loop><source src="song3.mp3" type="audio/mpeg"></audio>
+
+    <!-- Top Navbar -->
+    <nav class="w-full glass-card py-4 px-6 flex justify-between items-center z-20 sticky top-0 shadow-sm">
+        <div class="text-xl md:text-2xl font-bold text-pink-800 tracking-wider flex items-center gap-2">
+            <span>💖</span> Hello jaan, Happy birthday
+        </div>
+        <div class="flex gap-3">
+            <button onclick="switchTab('user')" id="btn-user-tab" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-full font-medium shadow-md transition transform hover:scale-105 text-sm md:text-base">
+                User Login
+            </button>
+            <button onclick="switchTab('admin')" id="btn-admin-tab" class="bg-gray-800 hover:bg-black text-white px-4 py-2 rounded-full font-medium shadow-md transition transform hover:scale-105 text-sm md:text-base">
+                Admin Login
+            </button>
+        </div>
+    </nav>
+
+    <!-- Infinite Moving Hindi Text Line (Right to Left) -->
+    <div class="w-full bg-pink-500/20 py-2 border-y border-pink-300/40 z-20 backdrop-blur-sm marquee-container">
+        <div class="marquee-text text-pink-900 font-bold text-base md:text-lg">
+            जान, यह वेबसाइट मैंने सिर्फ तुम्हारे लिए खास तौर पर बनाई है। ❤️
+            इस वेबसाइट का पूरा डेटा सुरक्षित है और इसके सर्वर का एक्सेस तुम्हारे जान के पास है। 🥰
+            शायद यह तुम्हारे लिए मेरा आखिरी मैसेज हो... ❤️🥺
+        </div>
+    </div>
+
+    <!-- Main Dynamic Content Container -->
+    <main class="flex-grow flex flex-col items-center justify-center text-center px-4 z-20 my-8">
+        
+        <!-- LOGIN SECTION (Default View) -->
+        <div id="login-card-container" class="glass-card p-8 md:p-10 rounded-3xl max-w-md w-full shadow-2xl relative border border-white/60">
+            <h2 id="login-title" class="text-2xl md:text-3xl font-extrabold text-pink-800 mb-6">User Login (Jaan) ❤️</h2>
+
+            <!-- User Login Form -->
+            <form id="user-form" onsubmit="event.preventDefault(); handleUserLogin();" class="space-y-5 text-left">
+                <div>
+                    <label class="block text-sm font-semibold text-pink-900 mb-1">Username</label>
+                    <input type="text" id="user-name" value="Exjaan" class="w-full px-4 py-3 rounded-xl bg-white/70 border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-500 text-pink-900 font-semibold shadow-inner">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-pink-900 mb-1">Password</label>
+                    <input type="password" id="user-pass" placeholder="Enter password" class="w-full px-4 py-3 rounded-xl bg-white/80 border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-500 shadow-inner">
+                </div>
+                <button type="submit" class="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-xl font-bold shadow-lg transition transform hover:scale-[1.02]">
+                    Login
+                </button>
+            </form>
+
+            <!-- Admin Login Form -->
+            <form id="admin-form" onsubmit="event.preventDefault(); handleAdminLogin();" class="space-y-5 text-left hidden">
+                <div>
+                    <label class="block text-sm font-semibold text-pink-900 mb-1">Admin Username</label>
+                    <input type="text" id="admin-name" value="Myjaan" class="w-full px-4 py-3 rounded-xl bg-white/70 border border-pink-300 focus:outline-none focus:ring-2 focus:ring-gray-700 text-gray-900 font-semibold shadow-inner">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-pink-900 mb-1">Admin Password</label>
+                    <input type="password" id="admin-pass" placeholder="Enter admin password" class="w-full px-4 py-3 rounded-xl bg-white/80 border border-pink-300 focus:outline-none focus:ring-2 focus:ring-gray-700 shadow-inner">
+                </div>
+                <button type="submit" class="w-full bg-gray-900 hover:bg-black text-white py-3 rounded-xl font-bold shadow-lg transition transform hover:scale-[1.02]">
+                    Admin Login
+                </button>
+            </form>
+
+            <p id="error-msg" class="text-red-600 font-semibold text-sm text-center mt-4 min-h-[20px]"></p>
+        </div>
+
+        <!-- SUCCESS / BIRTHDAY CELEBRATION SECTION (Hidden Initially, Shown After Login) -->
+        <div id="birthday-card" class="glass-card p-6 md:p-10 rounded-3xl max-w-lg w-full shadow-2xl relative border border-white/60 hidden text-center">
+            
+            <!-- 3 Separate Circle Music Icons (Cake ke Right Top Corner Me) -->
+            <div class="absolute top-4 right-4 flex gap-2 z-30">
+                <button id="music-btn-1" onclick="playSelectedSong(1)" title="Play Song 1" class="w-9 h-9 rounded-full bg-white/80 hover:bg-white text-pink-700 border border-pink-300 flex items-center justify-center font-bold text-base shadow-md transition transform hover:scale-110">
+                    🎵
+                </button>
+                <button id="music-btn-2" onclick="playSelectedSong(2)" title="Play Song 2" class="w-9 h-9 rounded-full bg-white/80 hover:bg-white text-pink-700 border border-pink-300 flex items-center justify-center font-bold text-base shadow-md transition transform hover:scale-110">
+                    🎶
+                </button>
+                <button id="music-btn-3" onclick="playSelectedSong(3)" title="Play Song 3" class="w-9 h-9 rounded-full bg-white/80 hover:bg-white text-pink-700 border border-pink-300 flex items-center justify-center font-bold text-base shadow-md transition transform hover:scale-110">
+                    🎼
+                </button>
+            </div>
+
+            <!-- 3 Tier Cake -->
+            <div class="cake-container">
+                <div class="candle"><div class="flame"></div></div>
+                <div class="tier tier-3"><div class="frosting"></div></div>
+                <div class="tier tier-2"><div class="frosting"></div></div>
+                <div class="tier tier-1"><div class="frosting"></div></div>
+            </div>
+
+            <!-- Date -->
+            <p class="text-pink-800 font-bold tracking-wider text-sm md:text-base mt-3">📅 31 Oct 2026</p>
+
+            <!-- Headings -->
+            <h1 class="text-3xl md:text-4xl font-extrabold text-pink-900 mt-2 mb-1">Happy birthday my jaan</h1>
+            <h2 class="text-xl md:text-2xl font-bold text-pink-700 mb-4">Happy birthday darling ❤️</h2>
+
+            <!-- Life Related Romantic Shayari -->
+            <div class="bg-white/40 p-4 rounded-2xl border border-pink-200/50 shadow-inner">
+                <p class="text-pink-950 font-medium italic text-sm md:text-base leading-relaxed">
+                    आज तुम्हारा जन्मदिन है मेरी जान, ❤️<br><br>
+                    काश! मैं तुम्हें वो सब दे पाता,<br>
+                    जो तुम्हारे चेहरे पर मुस्कान ला सके।<br>
+                    काश! तुम्हारी हर ख्वाहिश पूरी कर पाता,<br>
+                    और तुम्हारे हर दर्द को खुद में समेट पाता。<br><br>
+                    तुमसे मिलना शायद किस्मत थी मेरी,<br>
+                    लेकिन तुम्हें चाहना मेरी सबसे खूबसूरत आदत है।<br>
+                    तुम सिर्फ मेरी मोहब्बत नहीं हो,<br>
+                    तुम वो एहसास हो, जिसकी मुझे हर पल जरूरत है।<br><br>
+                    ना जाने कितने जन्मों का रिश्ता है तुमसे,<br>
+                    जो हर पल तुम्हारे करीब रहने को दिल करता है।<br>
+                    बस इतनी सी ख्वाहिश है मेरी,<br>
+                    हर आने वाला जन्मदिन तुम्हारे साथ मनाने को दिल करता है।<br><br>
+                    तुम हँसती रहो, खिलती रहो,<br>
+                    तुम्हारी जिंदगी खुशियों से भरी रहे।<br>
+                    और जब भी तुम अपनी दुआओं में कुछ माँगो,<br>
+                    उसमें कहीं न कहीं मेरा नाम भी रहे।<br><br>
+                    Happy Birthday मेरी जान! ❤️🥹<br>
+                    तुम आज भी मेरी सबसे खूबसूरत पसंद हो,<br>
+                    और हमेशा मेरी सबसे प्यारी मोहब्बत रहोगी। ❤️
+                </p>
+            </div>
+
+            <!-- "हमारी यादें" Button below Shayari Box -->
+            <div class="mt-6">
+                <button onclick="openMemoriesModal()" class="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white px-6 py-3 rounded-full font-bold shadow-lg transition transform hover:scale-105 text-base flex items-center justify-center gap-2 mx-auto">
+                    💖 हमारी यादें (Our Memories)
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MEMORIES MODAL / POPUP -->
+    <div id="memories-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center z-50 px-4">
+        <div class="glass-card p-6 md:p-8 rounded-3xl max-w-2xl w-full relative shadow-2xl border border-white/70 max-h-[85vh] flex flex-col">
+            <button onclick="closeMemoriesModal()" class="absolute top-4 right-4 text-pink-900 hover:text-red-600 text-2xl font-bold z-10">&times;</button>
+            
+            <h3 class="text-2xl font-extrabold text-pink-900 mb-4 text-center">✨ हमारी गहरी यादें और दिल की बातें ✨</h3>
+
+            <!-- Options before reading -->
+            <div id="memory-options" class="my-auto text-center space-y-4 py-6">
+                <p class="text-pink-950 font-semibold text-lg">कैसी तरह पढ़ना चाहती हो जान?</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="startMemoryRead('typewriter')" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-xl font-bold shadow-md transition transform hover:scale-105">
+                        ✍️ Option 1: Ek-ek word type ho (Normal Speed)
+                    </button>
+                    <button onclick="startMemoryRead('direct')" class="bg-gray-900 hover:bg-black text-white px-6 py-3 rounded-xl font-bold shadow-md transition transform hover:scale-105">
+                        📖 Option 2: Direct Full Message Dekhein
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content Container -->
+            <div id="memory-content-box" class="hidden overflow-y-auto pr-2 flex-grow text-left bg-white/40 p-4 rounded-2xl border border-pink-200/50 shadow-inner">
+                <p id="memory-text-display" class="text-pink-950 font-medium text-sm md:text-base leading-relaxed whitespace-pre-line"></p>
+            </div>
+
+            <!-- Back to options button inside content view -->
+            <div id="memory-back-btn" class="hidden mt-4 text-center">
+                <button onclick="resetMemoryModal()" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    🔄 Choose Another Mode
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-4 text-pink-900 font-semibold z-20 glass-card">
+        Made with ❤️ specially for Jaan
+    </footer>
+
+    <!-- JavaScript Animations & Logic -->
+    <script>
+        // Floating Elements Generator (Particles, Hearts, Paper Confetti)
+        const container = document.getElementById('animation-container');
+        const paperColors = ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffffff', '#ffd700', '#ff85a1'];
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 5 + 3;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}vw`;
+            particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            container.appendChild(particle);
+            setTimeout(() => particle.remove(), 10000);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.fontSize = `${Math.random() * 16 + 14}px`;
+            heart.style.animationDuration = `${Math.random() * 6 + 6}s`;
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 12000);
+        }
+
+        function createPaper() {
+            const paper = document.createElement('div');
+            paper.classList.add('paper-confetti');
+            paper.style.left = `${Math.random() * 100}vw`;
+            paper.style.backgroundColor = paperColors[Math.floor(Math.random() * paperColors.length)];
+            paper.style.animationDuration = `${Math.random() * 4 + 4}s`;
+            container.appendChild(paper);
+            setTimeout(() => paper.remove(), 8000);
+        }
+
+        setInterval(createParticle, 350);
+        setInterval(createHeart, 600);
+        setInterval(createPaper, 300);
+
+        // Sky Fireworks Cracker Smooth Animation Canvas Logic
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class FireworkParticle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.radius = Math.random() * 2 + 1;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 6,
+                    y: (Math.random() - 0.5) * 6
+                };
+                this.alpha = 1;
+                this.friction = 0.98;
+                this.gravity = 0.03;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+
+            update() {
+                this.velocity.x *= this.friction;
+                this.velocity.y *= this.friction;
+                this.velocity.y += this.gravity;
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= 0.012;
+            }
+        }
+
+        function createFirework() {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * (canvas.height * 0.5);
+            const colors = ['#ff0055', '#ff5050', '#ffffff', '#ffd700', '#ff99dd'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+
+            for (let i = 0; i < 30; i++) {
+                particles.push(new FireworkParticle(x, y, color));
+            }
+        }
+
+        setInterval(createFirework, 1500);
+
+        function animateFireworks() {
+            requestAnimationFrame(animateFireworks);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((p, index) => {
+                if (p.alpha > 0) {
+                    p.update();
+                    p.draw();
+                } else {
+                    particles.splice(index, 1);
+                }
+            });
+        }
+        animateFireworks();
+
+        // Switch Tabs (User / Admin)
+        function switchTab(type) {
+            const title = document.getElementById('login-title');
+            const userForm = document.getElementById('user-form');
+            const adminForm = document.getElementById('admin-form');
+            const errorMsg = document.getElementById('error-msg');
+            errorMsg.innerText = '';
+
+            if (type === 'user') {
+                title.innerText = 'User Login (Jaan) ❤️';
+                userForm.classList.remove('hidden');
+                adminForm.classList.add('hidden');
+            } else {
+                title.innerText = 'Admin Login';
+                adminForm.classList.remove('hidden');
+                userForm.classList.add('hidden');
+            }
+        }
+
+        // 3 Separate Songs Control Logic
+        let currentPlaying = 0;
+
+        function stopAllSongs() {
+            for (let i = 1; i <= 3; i++) {
+                const audio = document.getElementById(`bg-music-${i}`);
+                const btn = document.getElementById(`music-btn-${i}`);
+                if (audio) {
+                    audio.pause();
+                    audio.currentTime = 0;
+                }
+                if (btn) {
+                    btn.classList.remove('music-btn-active');
+                }
+            }
+        }
+
+        function playSelectedSong(songNumber) {
+            const selectedAudio = document.getElementById(`bg-music-${songNumber}`);
+            const selectedBtn = document.getElementById(`music-btn-${songNumber}`);
+
+            if (currentPlaying === songNumber) {
+                stopAllSongs();
+                currentPlaying = 0;
+            } else {
+                stopAllSongs();
+                if (selectedAudio) {
+                    selectedAudio.play().then(() => {
+                        currentPlaying = songNumber;
+                        selectedBtn.classList.add('music-btn-active');
+                    }).catch(e => console.log("Song play error:", e));
+                }
+            }
+        }
+
+        // Login Logic & Transition to Cake Celebration Page
+        function handleUserLogin() {
+            const username = document.getElementById('user-name').value;
+            const pass = document.getElementById('user-pass').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            if (username === 'Exjaan' && pass === '31101994') {
+                document.getElementById('login-card-container').classList.add('hidden');
+                document.getElementById('birthday-card').classList.remove('hidden');
+                playSelectedSong(1);
+            } else {
+                errorMsg.innerText = 'Username ya Password galat hai!';
+            }
+        }
+
+        function handleAdminLogin() {
+            const username = document.getElementById('admin-name').value;
+            const pass = document.getElementById('admin-pass').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            if (username === 'Myjaan' && pass === '3116') {
+                document.getElementById('login-card-container').classList.add('hidden');
+                document.getElementById('birthday-card').classList.remove('hidden');
+                playSelectedSong(1);
+            } else {
+                errorMsg.innerText = 'Admin credentials sahi nahi hain!';
+            }
+        }
+
+        // MEMORIES MODAL & TYPEWRITER LOGIC
+        const fullMemoryText = `HI JAAN, YOUR SWEETHEART YOUR JAANU YOUR MAY BE HEART CLOSED PERSON
+HAPPY BIRTHDAY MY DARLING MY SWEET HEART MY JAAN MY WIFEY  HAK TO NHI H KHENA KA PER BOL RHA HU MAAF KR DENA PLS
+HAPPY BIRTHDAY  TO MY JAN  MERA KEHNA KA HAK NA H PAR DIL MANTA NHI H , Mai kaha se suru kru bolne के लिए kaha kab khtm ho gyaa sab kuch kya bolu smjh nhi a rha  
+सबसे पहले तुम्हे तुम्हारे जन्मदिन की ढेर सारी शुभकामनाएं , ये  जन्मदिन आता हैं ना जितना खुशी का दिन होता हैं वो एक साल जिंदगी का कम होता जाता हैं तुझे  मेरी उम्र भी लगे हमेशा,, तू मेरे बिना भी चमकती हैं पति साथ, बहुत ख़ुश दिखती हो उससे मुझे थोड़ा heart होता h तुम मेरे बिना भी ख़ुश हो, मै नहीं चाहता कभी ऐसा की तू ख़ुश ना रहे, बस ये नहीं सेह पाता  की तू किसी और के साथ ख़ुश ह  ये जो किसी बोल रहा वो तेरे लिए मुझसे ज़्यदा खास ह जिसकी अहमियत मुझसे बढकर हैं जनता हु,
+
+मै आज जाते जाते तुझसे बस कह देना चाहता हु जो तुम मेरे लिए हो, मेरी लाइफ का वो हिस्सा हो वो पर्सन हो जिससे मेरी  खुशी के आँशु और दुख मे आंखे नम होना सुरु होती ह,  
+तुम बोलते हो  छोडो पहले तुम्हारे बात  पे बात करते हैं,पहले बात तुम्हारी बात पे करते हैं फिर  बात उस टाइम उस दिन करेंगे जब तू मेरे लाइफ मे वो परसन  बन के आये जिसको कभी  इग्नोर heart नहीं करना चाहा और ना मेरा कोई इरादा था heart करने का,  
+तेरी बात पे आते ह हाँ जान हाँ तेरे बात करने से वो प्यार भारी बात हो या लड़ाई मे बात हो   बात होने से अच्छा लगता हैं एक msg ek बात एक बार तुझे देखना  मुझे अंदर से  मै कितना heart हु उसको कम कर देता हैं हाँ खत्म नहीं कर पाता अब  पहले कर ही देते थे , 
+पहले बात सुरु हुई जब जाने अनजाने मे तुम मेरे इतने खास इतने करीब हो गए हो की ना तुमसे नफरत हो रही  ना छोड़ के जाना चाहता हु बस तेरा साथ चाहता हु तेरा हाथ चाहता हु, जो अब मिलना पोसिबल नहीं ह 
+
+जब हम सिर्फ एक्साम के लिए या ऐसे बात करते थे किसी को कोई मतलब नहीं होता था ना तुझे मुझसे  और ना मुझे तुमसे और तुमाहरे पति से, 
+हमारी बात  तब सुरु हुई जब तुम्हारे पास पति हो के भी नहीं थे   और मै  सिर्फ रील भेजता था  फिर तूने धीरे धीरे रील को romantic रील मे बदला  फिर  हम धीरे धीरे romantic रीलसे  और ज़्यदा romantic रील मे  गए, बात करते करते पता नहीं मुझे तेरे साथ अपना पन सा लगने लगा था  वो  तेरा  पहले मेरे लिए टाइम से टाइम निकाल लेना, हमारी बात  सुरु हुई जब तू लखनऊ मे थी  
+फिर तुम जबलपुर आ गए,  फिर  अपनी बात एक गर्ल फ्रेंड बॉयफ्रेंड  जैसी हो गई,  जिस दिन अपनी बात नहीं होती थी है वो दिन मेरा कैसा गुजरा गुजरता ह कैसे बता पाता मुझे समझ नहीं आता,  हमारी बाते होनी लगी , वो रात मे तेरे लिए मेरा इंतजार करना अब msg आएगा  अब कॉल आएगा  ये सिर्फ रात की बात हैं और मै सिर्फ रील भेजता था तुम्हे सायद से याद हो हमारा कुछ पल तो, मुझे सुरु से लेके आज तक हर वो बात हर डेट याद ह जो हमारी खास ह  कैसे भूल सकता हु,  
+अपनी धीरे धीरे गन्दी बात जो की एक दूसरे को बात पास करती गयी,  मुझे पता नहीं की मुझे प्यार था नहीं की तुझे था की नहीं  नहीं पता  बात तो तब मुझे लगा जब तुझसे बात नहीं होती  थी तो मुझे पल पल घुटन होती थी ,तेरे से बात करने के लिए तरसता था पर तुमसे पहले कहता नहीं था छुपा लेता था  फिर धीरे धीरे बात हुई  जब मुझे लगा प्यार हैं जब पहेली बार तुम्हे मेरे बगैर रहा नहीं गया तुम्हे याद नहीं होगा,  हां तब पहले बार मैं तुझे अपने प्यार का इजहार करा पहली बार प्रपोज़ किया हु, जान था बोल रहा हु पर मेरे लिए ये सब अभी भी हैं समझना,  पर तेरा कोई रप्लाई नहीं था तेरा रप्लाई अटरेक्शन  था तेरा कहना प्यार नहीं था, तूने मुझे तब प्रपोज़ किया  जब मै तुझसे बात नहीं करता था पहले वाली मुझे चाहने वाली तुम मुझे heart होगा इससे उसको ना होने दे वाली तुम मुझे heart ना हो वो वाली तुम,जब तक प्रपोज़ नहीं की तब तक हम बात रात मे और दुपहर मे करते थे बस, जब तू मेरे बिना चैन नहीं आता था  तो पहली बार तुमने  प्रपोज़ किया wo date 07- सितंबर ही हैं  जब तू मेरे प्यार को accpet करि तुझे भी हुआ पर तू अड़ी हुई थी अटरेक्शन हैं और मै प्यार मे,  
+हम बात बंद करके देखे दोनों का ही  एक दूसरे के बिना ना रह पाना प्यार ही तो ह एटरेक्शन मे क्या ह तू heart करके चैन से so रही वो h mai तुझे heatt krke हस रहा कोई मतलब nhi wo h एटरेक्शन 
+
+धीरे धीरे बात हुई  फिर तेरा मेरे बिना na reh पाना  तुझे तकलीफ देने लगा  बात इतनी ho गयी की तुझे मै छोड़ने की बात करता फिर फिर बिच मे अचानक बात बंद कर देता बोल के तो वो तड़पना जिस्मे तुम रो देते थे पहली बार कोई लड़की मेरे लिए रोइ थी मै कैसे छोड़ दू, जब तेरे पति आते थे उस टाइम मुझे कितना heart होता tha आज तुज्जे भी याद होगा ना  पूछता तो पहले भी था ना की कर ली पति साथ बताओ नहीं बोलता था क्या, ये भी बोलता था ना जाओ पति साथ करो, बस अब तुम्हे लगता ह मै बोल रहा तू मुझे अपना मानती नहीं हैं सायद अब, इसलिए बोलते हो की ना बोलो, पहली बार जब हम किए थे कॉल मे, तुम्हारा मन भी था पहले मेरे लिए मेरे साथ करना चाहती थी अगर मुझे तुमसे देखना था तो देखना तुम्हे भी था ना  एक   टाइम  था कॉल करने से  पहले वो waqt था जब तेरा मुझसे बात किये बिना मॉर्निंग नहीं होती थी अब लगता ह सुबह होती हैं तो तुम पति की बाहो मे होती होंगी,सोचो जब तुमाहरे पति नहीं होते थे तब मुझे कितनी बेचैनी थी कितना heart होता रहा होगा  रात कैसे गुजरती थी रात रात भर नींद नहीं आती थी, खोया रहता रहा होऊंगा तुमपे तुम्हारी यादो मे  ये  आज 29 की रात 1बजे लिख रहा जब तू किसी और के लिए व्रत हैं,और ये व्रत से  भी heart होता हैं तुम जानते हो क्या तुमने बोला मेरे लिए हो खुशी हुई थी पर मै नहीं चाहता मेरे लिए रहती क्योंकि मेरे नाम  मेरे लिए व्रत  कोई और के हाथो से किसी और के सामने खोलती इसलिए मैंने मना किया बहुत सी रोक टोक करा पर मै एक लड़का होके जनता हु क्या हो सकता ह क्या कमेंट हो सकते ह जलन ना हो  तो वो प्यार कैसा, मुझे हर वो सक्स से नफरत ह जिसके सामने तुम हस्ते हो  तुम कभी कभी सोचते होंगे ना एक तरफ बोलता हु तुम्हारी खुशी  देखना ह दूसरी तरफ खुशी देखि नहीं जाती,तुझे याद हैं  जब पहेली बार तुमने मुझे अपने पीरियड के बारे मे बताया डेट बताई,तब से मै  पीरियड मे साथ खड़ा रहा रहना चाहा,पीरियड मे जब जब मुझे पाई हो मै तब तब तुम्हारे साथ था ही इसलिए की मेरी इसमें भी एक्सपेक्टेशन हो नहीं जाना, क्योंकि तुम बोलते नहीं पर तुझे पति की जरूरत थी पर पति नहीं थे इसलिए मै खड़ा था  तुमसे प्यार हुआ ह  पहला प्यार  जिसमे मुझे तेरे bina कुछ अच्छा नहीं लगता कुछ भी, आज पूरा हमरा तुझे याद दिला रहा इसमें भी कुछ छोड़ रहा हु ,
+वो पहली बार मिलने का प्लान बनाया वो डेट  16 - अक्टूबर ही हैं जब पहेली बार  आमने सामने  थे,
+वो पार्क  जिसमे हम पहेली बार मिले पहली बार तुझे छुआ मै तुझसे तेरे बिना छुआ भी नहीं था हमारे बिच की दुरी  दूर ही थी तूने अपने करीब किया बहुत करीब वो तेरा  पहली बार सिर्फ टच होना  हग करना बहुत याद आता ह जान बहुत बहुत ज़्यदा, लगता हैं तू फिर आय और मुझे फिर वही  प्यार दे जो पहले दिया करती थी, तेरे साथ सामने रहना मेरे सारे परेशानी सारे सवाल सारे ओवरथिंकिंग को खत्म कर देता ह, हाँ वो मेरा पहेली डेट थी जो की लाइफ की बहुत यादगार खास बन गयी ह तुम डेट भूल जाते हो इतना गैर हु क्या  तुम बोलते हो पति की भी याद नहीं हैं  मुझे क्या करना उससे, पति का बर्थडे  हो या अनिवर्सरी  तेरा 12 बजे उसके लिए स्टेटस अजाना  और लाइन लिखी रहना वो,मै नहीं बोलूंगा तू लिखती ह तुझे पता ही होगा,  तो हमारी क्यों याद नहीं हैं, प्यार हैं की नहीं डेट तो याद रखते,ना  वो तेरा पहेली बार का निवाला वो तेरा पहेली बार होंठ मे मेरा होंठ मे रखना, ये सब ठीक  टाइम का कुछ पता नहीं चलता कब खत्म  हो गया वो घर लौटते टाइम वो इस्टाल के नीछे चुपके से सबसे छुपा के हाथ मे हाथ  देना  जैसे तुझे पता हो  की मुझे संभालने के लिए चाइये तू चाहिए , मुझे लग रहा था सोच रहा था की इतना जल्दी टाइम खत्म हो गया कास और टाइम होता बिताने के लिए कब मिलेंगे एक बार मिलने मे तुम इतना टाइम कर दिए जैसे तुम्हे ही मिलना नहीं था,  फिर हम सेकंड टाइम मिले 29 नबम्बर को   इसमें हम कुछ ज़्यदा ही  क्लोज हुए  पार्क मे ही तुम  बहुत क्लोज्ड कर दी थी, वो किस करते करते तेरा हाथ मेरे करीब करना तू समझ रही होंगी क्या बोल रहा,  जान तुझे पता हैं मै कितना खास कर चूका हु सबसे पहले रखा हैं तेरे पति  तुझे गेम के बाद इम्पोर्टेन्ट देते हैं जबकि तुम्हे मै सबसे पहले,फिर भी तुम मेरे और मेरे प्यार की क़द्र नहीं  करते,हेना जान 
+
+चल बात करते हैं मेरी लिए तेरे दिल की बात जानते हैं मै चाहता था की तुम अपने दिल की बात खोल के 
+रखो जो मै सुनना चाहता हु  मै समझता हु तुझे जैसे तू बोलती ह मेरी जगह रख के देख तोमै भी बोलता हु तू मेरी जगह आ के देख मेरी जगह छोड़ ना दी तो बताना इतनी तकलीफ हैं दर्द हैं जहाँ हमदर्द ही नहीं ह समझने को  इतनी तड़प होंगी सेक्स की नहीं जान सेक्स तो मै पैसे देके करने गया था पैसा दे के छोड़ दिया   मुझे सेक्स की तड़प भी तेरे साथ ही हैं  
+मुझे प्यार के साथ सेक्स चाहिए था, पर  तुम बोलते हो मै सिर्फ सेक्स चाहता हु वो बस चाहता तो तुम मेरे  खास ना होते और ना साथ मै छोड़ने का दम रखता हु  तुझे एक बार मे छोड़ दू  फिर लगता ह तुझे मेरे  ना होने का अहसास हो और तू मुझे ढूंढ़कर वापस आय और मै ना रहा तो  उस दिन तड़पोगे  अफ़सोस के अलवा कुछ नहीं रहा तो,यही सोच के झूठी कसमे वादे करता आ रहा हु  जान,तुम्हे मालूम होगा छोड़ने के बाद पलट के  देखने वाला नहीं हु, जानती हो, तूने अपने प्यार मे औकात दिखाई दी थी  पैसे मे तोला प्यार को  मै तेरे खर्चा नहीं उठा सकता था क्या तूने बोला मेरे पति मेरा खर्चा उठाते ह तू नहीं उठा पायेगा, तूने लिमिट मे रहना सिखाया, तूने बोला छोड़ दे छोड़ दिया तुझे ये विश तेरे कहने मे भेज रहा वरना ये भी नहीं आती इस बार बर्थडे मे  हु सायद आगे कभी मेरा साथ ना हो तेरे पति का रहेगा, करवा चौथ   तेरे लिए बहुत ख़ुश वाला होगा मेरी याद भी नहीं आयी होंगी,पति से लड़ाई हुई तब याद आ रहा था मै, क्यों क्योंकि वो मनाते नहीं  हेना, तू बता ना एक बार सच मे तेरे पति मेरे जैसे चाहते ह क्या पूछते हो क्या   बता दे इसका ans मुझे लगता ह नहीं इसलिए तू ans भी नहीं दे पा रही  तू पहले वाली नहीं ह नहीं बन पायेगी पहले वाली  मुझे भी बहुत कुछ बहुत खास मानती थी जब पति साथ नहीं थे अब साथ ह तो मुझे कचरा मानती ह
+
+तेरे जान की तरफ से फिर से एक बार जन्मदिन की ढेर सारी शुभकामनाएं!
+मेरी उम्र भी तेरे पति को लग जाय।
+ये अब शायद आखिरी नाराजगी थी तेरे साथ और syd से आखिरी msg भी चलता हूँ enjoy करो birthday pati साथ ghumo enjoy करो, पता है तू पहले जैसे नहीं बन सकती अब...
+
+by:
+तेरा JAANU जो तुमपे मरता है,
+तेरे बिना मेरा हर पल हर दिन हर खुशी अधूरी ही रहेगी जान! ❤️`;
+
+        let typewriterTimer = null;
+
+        function openMemoriesModal() {
+            document.getElementById('memories-modal').classList.remove('hidden');
+            document.getElementById('memory-options').classList.remove('hidden');
+            document.getElementById('memory-content-box').classList.add('hidden');
+            document.getElementById('memory-back-btn').classList.add('hidden');
+            document.getElementById('memory-text-display').innerText = '';
+            if(typewriterTimer) clearInterval(typewriterTimer);
+        }
+
+        function closeMemoriesModal() {
+            document.getElementById('memories-modal').classList.add('hidden');
+            if(typewriterTimer) clearInterval(typewriterTimer);
+        }
+
+        function resetMemoryModal() {
+            document.getElementById('memory-options').classList.remove('hidden');
+            document.getElementById('memory-content-box').classList.add('hidden');
+            document.getElementById('memory-back-btn').classList.add('hidden');
+            document.getElementById('memory-text-display').innerText = '';
+            if(typewriterTimer) clearInterval(typewriterTimer);
+        }
+
+        function startMemoryRead(mode) {
+            document.getElementById('memory-options').classList.add('hidden');
+            document.getElementById('memory-content-box').classList.remove('hidden');
+            document.getElementById('memory-back-btn').classList.remove('hidden');
+            
+            const displayEl = document.getElementById('memory-text-display');
+            displayEl.innerText = '';
+
+            if (mode === 'direct') {
+                displayEl.innerText = fullMemoryText;
+            } else {
+                // Typewriter effect
+                let i = 0;
+                if(typewriterTimer) clearInterval(typewriterTimer);
+                typewriterTimer = setInterval(() => {
+                    if (i < fullMemoryText.length) {
+                        displayEl.innerText += fullMemoryText.charAt(i);
+                        i++;
+                        // Auto scroll to bottom of box
+                        const box = document.getElementById('memory-content-box');
+                        box.scrollTop = box.scrollHeight;
+                    } else {
+                        clearInterval(typewriterTimer);
+                    }
+                }, 25); // Speed adjustment here (lower is faster)
+            }
+        }
+    </script>
+</body>
+</html>
